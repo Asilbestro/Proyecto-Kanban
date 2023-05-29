@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Kanban</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/drag-and-drop.js" defer></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+    <div class="board">
+        <form id="form">
+            <input type="text" name="task" placeholder="new Task..." id="todo-input" required />
+            <button type="submit" class="btn-form">Add Task</button>
+        </form>
+        <div class="column">
+
+            <div class="card-column" id="todo-column">
+                <h3 class="title-column">Up Coming</h3>
+
+                <p class="task" id="taskId" draggable="true">Seguir con TP de Estructuras de Datos II</p>
+            </div>
+
+            <div class="card-column" id="todo-column">
+                <h3 class="title-column">In Progress</h3>
+
+                <p class="task" id="taskId" draggable="true">Terminar frontend tablero kanban</p>
+            </div>
+
+            <div class="card-column" id="todo-column">
+                <h3 class="title-column">To Review</h3>
+
+                <p class="task" id="taskId" draggable="true">Entregar TP de Programación Mobile</p>
+            </div>
+
+            <div class="card-column" id="todo-column">
+                <h3 class="title-column">Done</h3>
+                <p class="task" id="taskId" draggable="true">Estudiar para diseño de sistemas</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
