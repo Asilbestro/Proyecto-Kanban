@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,37 +10,74 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/drag-and-drop.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/expand.js" defer></script>
 </head>
 
 <body>
     <div class="board">
         <form id="form">
             <input type="text" name="task" placeholder="new Task..." id="todo-input" required />
-            <button type="submit" class="btn-form">Añadit Tarea</button>
+            <button type="submit" class="btn-form">Añadir Tarea</button>
         </form>
         <div class="column">
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">Pendiente</h3>
 
-                <p class="task" id="taskId" draggable="true">Seguir con TP de Estructuras de Datos II</p>
+                <div class="task" id="taskId" draggable="true">
+                    <p>Seguir con TP de Estructuras de Datos II</p>
+
+                    <div class="additional-info">
+                        <p>Descripción de la tarea:</p>
+                        <p>Encargado: Juan (CEO)</p>
+                        <p>Horas estimadas: 15hs</p>
+                    </div>
+                </div>
             </div>
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">En Progreso</h3>
 
-                <p class="task" id="taskId" draggable="true">Terminar frontend tablero kanban</p>
+                <div class="task" id="taskId" draggable="true">
+                    <p>Terminar frontend tablero kanban</p>
+
+                    <div class="additional-info">
+                        <p>Descripción de la tarea:</p>
+                        <p>Encargado: Juan (CEO)</p>
+                        <p>Horas estimadas: 15hs</p>
+                    </div>
+                </div>
             </div>
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">A Revisar</h3>
 
-                <p class="task" id="taskId" draggable="true">Entregar TP de Programación Mobile</p>
+                <div class="task" id="taskId" draggable="true">
+                    <p>Entregar TP de Programación Mobile</p>
+
+                    <div class="additional-info">
+                        <p>Descripción de la tarea:</p>
+                        <p>Encargado: Juan (CEO)</p>
+                        <p>Horas estimadas: 15hs</p>
+                    </div>
+                </div>
             </div>
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">Hecho</h3>
-                <p class="task" id="taskId" draggable="true">Estudiar para diseño de sistemas</p>
+
+                <div class="task" id="taskId" draggable="true">
+                    <p>Estudiar para diseño de sistemas</p>
+
+                    <div class="additional-info">
+                        <p>
+                        <p >Descripción de la tarea:</p>
+                        Seguir con el módulo 3, y realizar evaluación para reafirmar conceptos
+                        </p>
+                        <p>Encargado: Juan (CEO)</p>
+                        <p>Horas estimadas: 15hs</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

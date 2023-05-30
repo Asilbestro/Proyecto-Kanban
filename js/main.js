@@ -15,6 +15,8 @@ form.addEventListener("submit", (e) => {
     newTask.setAttribute("draggable", "true");
     newTask.innerText = value;
 
+    
+
     newTask.addEventListener("dragstart", () => {
         newTask.classList.add("is-dragging");
     });
