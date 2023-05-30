@@ -1,12 +1,18 @@
-const form = document.getElementById("form");
-const input = document.getElementById("todo-input");
-const taskColumn = document.getElementById("todo-column");
+const submit = document.getElementById("btn-id");
+// const input = document.getElementById("todo-input");
+// const task_column = document.getElementById("todo-column");
 
-// Crear tarea y agregar a Up Coming
-form.addEventListener("submit", (e) => {
+// Cuando se hace click al boton añadir tarea, muestra el formulario
+submit.addEventListener("click", (e) => {
     e.preventDefault();
 
+    const form = document.querySelector(".form");
+    form.classList.toggle("expand-form");
+
+
+
     const value = input.value;
+    console.log(value);
     if (!value) return;
 
     // Crear elemento div que contiene la tarea
@@ -24,25 +30,24 @@ form.addEventListener("submit", (e) => {
 
 
     // Crear elemento div con información adicional dentro del otro div
-    const additionalInfoDiv = document.createElement('div');
-    additionalInfoDiv.className = 'additional-info';
+    const additional_info_div = document.createElement('div');
+    additional_info_div.className = 'additional-info';
 
     // Crear elementos p dentro del div con info adicional
-    const descriptionP = document.createElement('p');
-    descriptionP.textContent = 'Descripción de la tarea:';
-    const managerP = document.createElement('p');
-    managerP.textContent = 'Encargado: Juan (CEO)';
-    const estimatedHoursP = document.createElement('p');
-    estimatedHoursP.textContent = 'Horas estimadas: 15hs';
+    const description_p = document.createElement('p');
+    description_p.textContent = 'Descripción de la tarea:';
+    const in_charge_p = document.createElement('p');
+    in_charge_p.textContent = 'Encargado: Juan (CEO)';
+    const estimated_hours_p = document.createElement('p');
+    estimated_hours_p.textContent = 'Horas estimadas: 15hs';
 
     // Añadir los elementos p al div con info adicional
-    additionalInfoDiv.appendChild(descriptionP);
-    additionalInfoDiv.appendChild(managerP);
-    additionalInfoDiv.appendChild(estimatedHoursP);
+    additional_info_div.appendChild(description_p);
+    additional_info_div.appendChild(in_charge_p);
+    additional_info_div.appendChild(estimated_hours_p);
 
     // Añadir div adicional al div principal
-    div.appendChild(additionalInfoDiv);
-
+    div.appendChild(additional_info_div);
 
     div.addEventListener("dragstart", () => {
         div.classList.add("is-dragging");
@@ -53,12 +58,16 @@ form.addEventListener("submit", (e) => {
     });
 
     div.addEventListener('click', () => {
-        additionalInfoDiv.classList.toggle("expand");
+        additional_info_div.classList.toggle("expand");
     });
 
     // Añadir el div principal a la columna de tareas
-    taskColumn.appendChild(div);
+    task_column.appendChild(div);
 
     // Borrar campo input una vez agregada la tarea
     input.value = "";
 });
+
+function die(message) {
+    throw new Error(message);
+}

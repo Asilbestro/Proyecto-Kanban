@@ -15,10 +15,25 @@
 
 <body>
     <div class="board">
-        <form id="form">
-            <input type="text" name="task" placeholder="new Task..." id="todo-input" required />
-            <button type="submit" class="btn-form">Añadir Tarea</button>
+        <form class="form">
+            <div class="content-form">
+                <label for="task">Tarea</label>
+                <input type="text" name="task" id="todo-input" required>
+
+                <label for="description">Descripción</label>
+                <input type="text" name="description" id="todo-input" maxlength="70" required>
+
+                <label for="expiration">Vencimiento</label>
+                <input type="date" name="expiration" id="todo-input" required>
+
+                <label for="in_crarge">Encargado</label>
+                <input type="text" name="in_crarge" id="todo-input" required>
+
+                <button type="submit" class="btn-form submit">Añadir Tarea</button>
+            </div>
         </form>
+        <button type="submit" id="btn-id" class="btn-form">Añadir Tarea</button>
+
         <div class="column">
 
             <div class="card-column" id="todo-column">
@@ -28,7 +43,9 @@
                     <p>Seguir con TP de Estructuras de Datos II</p>
 
                     <div class="additional-info">
-                        <p>Descripción de la tarea:</p>
+                        <p>Descripción de la tarea:
+
+                        </p>
                         <p>Encargado: Juan (CEO)</p>
                         <p>Horas estimadas: 15hs</p>
                     </div>
@@ -42,7 +59,10 @@
                     <p>Terminar frontend tablero kanban</p>
 
                     <div class="additional-info">
-                        <p>Descripción de la tarea:</p>
+                        <p>
+                            Descripción de la tarea:
+                        <p>Conectar Backend y hacer formulario para añadir tarea</p>
+                        </p>
                         <p>Encargado: Juan (CEO)</p>
                         <p>Horas estimadas: 15hs</p>
                     </div>
@@ -71,7 +91,7 @@
 
                     <div class="additional-info">
                         <p>
-                        <p >Descripción de la tarea:</p>
+                        <p>Descripción de la tarea:</p>
                         Seguir con el módulo 3, y realizar evaluación para reafirmar conceptos
                         </p>
                         <p>Encargado: Juan (CEO)</p>
