@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Kanban</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="js/drag-and-drop.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/expand.js" defer></script>
@@ -17,22 +18,27 @@
     <div class="board">
         <form class="form">
             <div class="content-form">
+                <button type="button" class="close-button" id="close-form" aria-label="Cerrar">
+                    <!-- <i class="fas fa-times close"></i> -->
+                    <img src="./img/borrar.png" alt="icon-delete">
+                </button>
+
                 <label for="task">Tarea</label>
-                <input type="text" name="task" id="todo-input" required>
+                <input type="text" name="task" id="name-task" required>
 
                 <label for="description">Descripción</label>
-                <input type="text" name="description" id="todo-input" maxlength="70" required>
+                <input type="text" name="description" id="description-task" maxlength="70" required>
 
                 <label for="expiration">Vencimiento</label>
-                <input type="date" name="expiration" id="todo-input" required>
+                <input type="date" name="expiration" id="expiration-task" required>
 
-                <label for="in_crarge">Encargado</label>
-                <input type="text" name="in_crarge" id="todo-input" required>
+                <label for="in_charge">Encargado</label>
+                <input type="text" name="in_charge" id="in-charge-task" required>
 
-                <button type="submit" class="btn-form submit">Añadir Tarea</button>
+                <button type="submit" id="submit-id" class="btn-form submit">Añadir Tarea</button>
             </div>
         </form>
-        <button type="submit" id="btn-id" class="btn-form">Añadir Tarea</button>
+        <button type="submit" id="btn-id" class="btn-form">Añadir Tarea +</button>
 
         <div class="column">
 
