@@ -21,7 +21,7 @@
     overflow: scroll;
 
     /* background-color: #abd7ae; */
-    background: url('../img/background.jpg');
+    background: url('https://s1.1zoom.me/b5050/393/Milky_Way_Mountains_Sky_442965_1366x768.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -83,6 +83,10 @@
     outline: none;
 }
 
+#expiration-task{
+    width: 100%;
+}
+
 .btn-form {
     margin-left: 32px;
     margin-top: 12px;
@@ -120,7 +124,7 @@
 .close-button {
     float: right;
     border: none;
-    background-color: #F6FBF6;
+    background-color: transparent;
 
     cursor: pointer;
 }
