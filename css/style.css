@@ -20,23 +20,26 @@
     height: 100vh;
     overflow: scroll;
 
-    background-color: #ffffff;
-    background-color: #abd7ae;
+    /* background-color: #abd7ae; */
+    background: url('../img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
 /* FORM */
 .form {
-    display: none;
-    transition: all height 0.5s ease;
+    /* background-color: #0000004d; */
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 500ms ease;
 
     width: 100%;
     height: 100%;
 
     border-radius: 5px;
     position: absolute;
-
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .content-form {
@@ -44,6 +47,7 @@
     margin-left: 200px;
     padding: 25px;
 
+    box-shadow: 0px 5px 15px #00000040;
     border-radius: 5px;
     position: absolute;
 
@@ -108,13 +112,15 @@
 }
 
 .expand-form {
-    display: block;
+    max-height: 600px;
 }
+
 
 /* Icono para cerrar ventana de formulario */
 .close-button {
     float: right;
     border: none;
+    background-color: #F6FBF6;
 
     cursor: pointer;
 }
@@ -182,12 +188,6 @@
     border-left: 3px solid #4a81e8;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform-origin: top;
-
-
-    /* para que se ajuste al contenido de la tarea */
-    /* display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 500ms; */
 }
 
 /* Reglas que tomará al activar el evento drag */
@@ -203,12 +203,11 @@
 
 /* Reglas que tomará desde el js cuando se active el evento click en la tarea */
 .additional-info {
-    /* margin-bottom: 10px; */
     max-height: 0;
     overflow: hidden;
     color: rgba(0, 0, 0, 0.402);
 
-    transition: max-height 500ms ease;
+    transition: max-height 700ms ease;
 }
 
 .additional-info p {

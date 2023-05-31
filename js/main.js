@@ -1,5 +1,5 @@
 const form = document.querySelector(".form");
-const button_add_task = document.getElementById("btn-id");
+const button_add_task = document.getElementById("button-id");
 
 // Valores del formulario
 const input_task = document.getElementById('name-task');
@@ -15,8 +15,8 @@ const button_close_form = document.getElementById('close-form');
 // Cuando se hace click al boton añadir tarea, muestra el formulario
 button_add_task.addEventListener("click", (e) => {
     e.preventDefault();
-
     form.classList.toggle("expand-form");
+
 });
 
 form.addEventListener("submit", (e) => {
