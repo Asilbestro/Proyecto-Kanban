@@ -15,12 +15,14 @@ drop.forEach((zone) => {
         e.preventDefault();
 
         const bottom_task = insertAboveTask(zone, e.clientY);
-        const cur_task = document.querySelector(".is-dragging");
+
+        // busca el elemento que tenga la clase .is-dragging, es decir, que está siendo arrastrado
+        const current_task = document.querySelector(".is-dragging");
 
         if (!bottom_task) {
-            zone.appendChild(cur_task);
+            zone.appendChild(current_task);
         } else {
-            zone.insertBefore(cur_task, bottom_task);
+            zone.insertBefore(current_task, bottom_task);
         }
 
     });
@@ -28,12 +30,14 @@ drop.forEach((zone) => {
 
 // Lógica para insertar tarea arriba o abajo de la tarea existente
 function insertAboveTask(zone, mouseY) {
-    const els = zone.querySelectorAll(".task:not(.is-dragging)");
+    const non_dragging_tasks = zone.querySelectorAll(".task:not(.is-dragging)");
 
     let closest_task = null;
     let closest_offset = Number.NEGATIVE_INFINITY;
 
-    els.forEach((task) => {
+    non_dragging_tasks.forEach((task) => {
+
+        // indica la posición vertical del elemento task 
         const { top } = task.getBoundingClientRect();
         const offset = mouseY - top;
 
