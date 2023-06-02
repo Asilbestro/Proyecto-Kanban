@@ -16,7 +16,7 @@
 
 <body>
     <div class="board">
-        <form class="form">
+        <form class="form" id="form1">
             <div class="content-form">
                 <button type="button" class="close-button" id="close-form" aria-label="Cerrar">
                     <img src="https://cdn-icons-png.flaticon.com/128/6467/6467134.png" alt="icon-delete">
@@ -39,8 +39,19 @@
         </form>
         <button type="submit" id="button-id" class="btn-form">Añadir Tarea +</button>
 
-        <div class="column">
+        <form class="form" id="form2">
+            <div class="content-form">
+                <label for="add-column">Añadir columna</label>
+                <input type="text" name="add-column" id="name-column" required>
 
+                <button type="submit" id="submit-id" class="btn-form submit">Añadir columna</button>
+            </div>
+        </form>
+
+        <button type="submit" id="submit-id-column" class="btn-form">Añadir columna</button>
+
+
+        <div class="column">
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">Pendiente</h3>
 

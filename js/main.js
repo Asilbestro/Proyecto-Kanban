@@ -1,7 +1,11 @@
-const form = document.querySelector(".form");
+const form1 = document.querySelector("#form1");
 const button_add_task = document.getElementById("button-id");
 
-// Valores del formulario
+const form2 = document.querySelector("#form2");
+const button_add_column = document.getElementById("submit-id-column");
+const board = document.querySelector('.column');
+
+// Valores del formulario para agregar tarea
 const input_task = document.getElementById('name-task');
 const input_description = document.getElementById('description-task');
 const input_expiration = document.getElementById('expiration-task');
@@ -9,17 +13,20 @@ const input_in_charge = document.getElementById('in-charge-task');
 
 const task_column = document.getElementById("todo-column");
 
+// Boton para cerrar el formulario 1
 const button_close_form = document.getElementById('close-form');
 
+// Valor del formulario para agregar columna
+const input_column = document.getElementById('name-column');
+const zone_drop = document.querySelectorAll('card-column');
 
 // Cuando se hace click al boton añadir tarea, muestra el formulario
 button_add_task.addEventListener("click", (e) => {
     e.preventDefault();
-    form.classList.toggle("expand-form");
-
+    form1.classList.toggle("expand-form");
 });
 
-form.addEventListener("submit", (e) => {
+form1.addEventListener("submit", (e) => {
     e.preventDefault();
 
     // Crear elemento div que contiene la tarea
@@ -85,14 +92,46 @@ form.addEventListener("submit", (e) => {
     input_expiration.value = "";
     input_in_charge.value = "";
 
-    form.classList.toggle("expand-form");
+    form1.classList.toggle("expand-form");
 });
 
 // Evento para cerrar formulario
 button_close_form.addEventListener('click', (e) => {
     e.preventDefault();
 
-    form.classList.toggle("expand-form");
+    form1.classList.toggle("expand-form");
+});
+
+
+// Boton para agregar columna 
+button_add_column.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    form2.classList.toggle("expand-form");
+    form2.classList.toggle("form2");
+});
+
+
+// Formulario 2 para agregar columna
+form2.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const div_column = document.createElement('div');
+    div_column.className = 'card-column';
+    div_column.id = 'todo-column';
+
+    const h3_column = document.createElement('h3');
+    h3_column.className = 'title-column'
+    h3_column.textContent = input_column.value;
+
+    div_column.appendChild(h3_column);
+    board.appendChild(div_column);
+
+    input_column.value = "";
+
+    form2.classList.toggle("expand-form");
+    form2.classList.toggle("form2");
+
 })
 
 // function die(message) {
