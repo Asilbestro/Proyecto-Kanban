@@ -115,7 +115,7 @@
 }
 
 /* Icono para cerrar ventana de formulario */
-.close-button {
+.button-icon {
     float: right;
     border: none;
     background-color: transparent;
@@ -123,8 +123,13 @@
     cursor: pointer;
 }
 
-.close-button img {
+.button-icon img {
     height: 23px;
+}
+
+/* Icono para hacer mas funciones (borrar,editar y cambiar color  */
+.more:hover {
+    box-shadow: 1px 1px 1px rgb(132, 122, 122);
 }
 
 .expand-form {
@@ -142,7 +147,6 @@
     padding: 24px 20px;
 
     overflow: scroll;
-    /* height: 100%; */
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -198,6 +202,46 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform-origin: top;
 }
+
+.fix {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.container-functions {
+    max-height: 0;
+    overflow: hidden;
+    margin-right: 30px;
+
+    width: 11%;
+    height: 100px;
+
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 2px 0px 3px #a2a0a0;
+    font-size: 16px;
+
+    position: absolute;
+    transition: max-height 0.4s ease;
+}
+
+.container-functions p {
+    height: 33.3%;
+    padding-top: 7px;
+}
+
+.container-functions p:hover {
+    background-color: #cbcaca;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: block;
+    max-height: 150px;
+
+}
+
+
 
 /* Reglas que tomará al activar el evento drag */
 .is-dragging {

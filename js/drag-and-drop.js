@@ -11,10 +11,10 @@ drag.forEach((task) => {
 });
 
 drop.forEach((zone) => {
-    zone.addEventListener("dragover", (e) => {
-        e.preventDefault();
+    zone.addEventListener("dragover", (event) => {
+        event.preventDefault();
 
-        const bottom_task = insertAboveTask(zone, e.clientY);
+        const bottom_task = insertAboveTask(zone, event.clientY);
 
         // busca el elemento que tenga la clase .is-dragging, es decir, que está siendo arrastrado
         const current_task = document.querySelector(".is-dragging");
@@ -24,7 +24,6 @@ drop.forEach((zone) => {
         } else {
             zone.insertBefore(current_task, bottom_task);
         }
-
     });
 });
 
