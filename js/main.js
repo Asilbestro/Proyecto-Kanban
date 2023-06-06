@@ -116,6 +116,9 @@ form1.addEventListener("submit", (event) => {
 
 
     div.addEventListener("dragstart", () => {
+        // cerrar el div que muestra mas opciones a las tareas (editar,eliminar, cambiar de color)
+        div.querySelector(".container-functions").classList.remove("hidden");
+
         div.classList.add("is-dragging");
     });
 
@@ -127,16 +130,6 @@ form1.addEventListener("submit", (event) => {
         additional_info_div.classList.toggle("expand");
     });
 
-    more_function.forEach((icon_more_function) => {
-        icon_more_function.addEventListener('click', (event) => {
-            // evitar que se propague, y se expanda la tarjeta con hacer click al boton 
-            event.stopPropagation();
-
-            const show_more_functions = icon_more_function.querySelector(".container-functions");
-            show_more_functions.classList.toggle("hidden");
-
-        });
-    });
     button.addEventListener('click', (event) => {
         event.stopPropagation();
         button.querySelector(".container-functions").classList.toggle('hidden');
@@ -146,7 +139,6 @@ form1.addEventListener("submit", (event) => {
     task_column.appendChild(div);
 
     // Borrar campo input una vez agregada la tarea
-
     input_task.value = "";
     input_description.value = "";
     input_expiration.value = "";

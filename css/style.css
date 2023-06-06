@@ -176,11 +176,10 @@
 
     padding: 12px;
     border-radius: 6px;
-    width: 285px;
+    width: auto;
     min-height: 120px;
 
     break-inside: avoid;
-
 }
 
 .task {

@@ -1,8 +1,12 @@
 const drag = document.querySelectorAll(".task");
 const drop = document.querySelectorAll(".card-column");
 
+
 drag.forEach((task) => {
     task.addEventListener("dragstart", () => {
+        // cerrar el div que muestra mas opciones a las tareas (editar,eliminar, cambiar de color)
+        task.querySelector(".container-functions").classList.remove("hidden");
+
         task.classList.add("is-dragging");
     });
     task.addEventListener("dragend", () => {
