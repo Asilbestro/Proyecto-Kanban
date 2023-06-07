@@ -224,9 +224,14 @@
     transition: max-height 0.4s ease;
 }
 
-.container-functions p {
+.container-functions div {
     height: 33.3%;
     padding-top: 7px;
+}
+
+.container-functions div p {
+    height: 100%;
+    padding-top: 2px;
 }
 
 .container-functions p:hover {
@@ -238,6 +243,34 @@
     display: block;
     max-height: 150px;
 
+}
+
+#color-task {
+    /* max-height: 0; */
+    /* overflow: hidden; */
+
+    display: flex;
+    list-style: none;
+}
+
+#color-task li {
+    width: 100%;
+}
+
+.red {
+    color: #fb4141;
+}
+
+.yellow {
+    color: #f8ef3b;
+}
+
+.green {
+    color: #2cf64e
+}
+
+.blue {
+    color: #1f57f2
 }
 
 

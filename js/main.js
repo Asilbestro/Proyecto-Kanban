@@ -65,18 +65,66 @@ form1.addEventListener("submit", (event) => {
 
     button.appendChild(div_container_functions);
 
-    const p_change_color = document.createElement("p");
-    p_change_color.textContent = "cambiar color";
+    const div_change_color = document.createElement("div");
+    div_change_color.className = "p-change-color";
+    div_change_color.id = "color-task";
+
+
+    const li_red = document.createElement("li");
+
+    const i_red = document.createElement("i");
+    i_red.className = "fas fa-square red";
+
+    li_red.appendChild(i_red);
+
+    const li_yellow = document.createElement("li");
+
+    const i_yellow = document.createElement("i");
+    i_yellow.className = "fas fa-square yellow";
+
+    li_yellow.appendChild(i_yellow);
+
+
+    const li_green = document.createElement("li");
+
+    const i_green = document.createElement("i");
+    i_green.className = "fas fa-square green";
+
+    li_green.appendChild(i_green);
+
+
+    const li_blue = document.createElement("li");
+
+    const i_blue = document.createElement("i");
+    i_blue.className = "fas fa-square blue";
+
+    li_blue.appendChild(i_blue);
+
+    div_change_color.appendChild(li_red);
+    div_change_color.appendChild(li_yellow);
+    div_change_color.appendChild(li_green);
+    div_change_color.appendChild(li_blue);
+
+    const div_p_edit = document.createElement("div");
 
     const p_edit = document.createElement("p");
+    p_edit.className = "p-edit";
     p_edit.textContent = "Editar";
 
+    div_p_edit.appendChild(p_edit);
+
+    const div_p_delete = document.createElement("div");
+
     const p_delete = document.createElement("p");
+    p_delete.className = "p-delete";
     p_delete.textContent = "Eliminar";
 
-    div_container_functions.appendChild(p_change_color);
-    div_container_functions.appendChild(p_edit);
-    div_container_functions.appendChild(p_delete);
+    div_p_delete.appendChild(p_delete);
+
+
+    div_container_functions.appendChild(div_change_color);
+    div_container_functions.appendChild(div_p_edit);
+    div_container_functions.appendChild(div_p_delete);
 
     div.appendChild(button);
 
@@ -132,7 +180,24 @@ form1.addEventListener("submit", (event) => {
 
     button.addEventListener('click', (event) => {
         event.stopPropagation();
-        button.querySelector(".container-functions").classList.toggle('hidden');
+
+        const show_more_functions = button.querySelector(".container-functions");
+        show_more_functions.classList.toggle("hidden");
+
+        const p_change_color = show_more_functions.querySelector(".p-change-color");
+        const p_edit = show_more_functions.querySelector(".p-edit");
+        const p_delete = show_more_functions.querySelector(".p-delete");
+
+        // remueve el evento de cada opcion de la tarea, para que no se acumule
+        p_change_color.removeEventListener('click', handleChangeColor);
+        p_edit.removeEventListener('click', handleEdit);
+        p_delete.removeEventListener('click', handleDelete);
+
+        // escucha el si se hace click a cada una de las opciones de las tareas
+        p_change_color.addEventListener('click', handleChangeColor);
+        p_edit.addEventListener('click', handleEdit);
+        p_delete.addEventListener('click', handleDelete);
+
     });
 
     // Añadir el div principal a la columna de tareas
@@ -157,7 +222,6 @@ button_close_form.addEventListener('click', () => {
 
     form1.classList.remove("expand-form");
 });
-
 
 // Boton para agregar columna 
 button_add_column.addEventListener('click', (event) => {
@@ -209,14 +273,45 @@ button_close_form2.addEventListener('click', () => {
 
 more_function.forEach((icon_more_function) => {
     icon_more_function.addEventListener('click', (event) => {
+
         // evitar que se propague, y se expanda la tarjeta con hacer click al boton 
         event.stopPropagation();
 
         const show_more_functions = icon_more_function.querySelector(".container-functions");
         show_more_functions.classList.toggle("hidden");
 
+        const p_change_color = show_more_functions.querySelector(".p-change-color");
+        const p_edit = show_more_functions.querySelector(".p-edit");
+        const p_delete = show_more_functions.querySelector(".p-delete");
+
+        // remueve el evento de cada opcion de la tarea, para que no se acumule
+        p_change_color.removeEventListener('click', handleChangeColor);
+        p_edit.removeEventListener('click', handleEdit);
+        p_delete.removeEventListener('click', handleDelete);
+
+        // escucha el si se hace click a cada una de las opciones de las tareas
+        p_change_color.addEventListener('click', handleChangeColor);
+        p_edit.addEventListener('click', handleEdit);
+        p_delete.addEventListener('click', handleDelete);
     });
 });
+
+function handleChangeColor() {
+    console.log("activaste el evento cambiar de color");
+
+}
+
+function handleEdit() {
+    console.log("activaste el evento editar");
+    // codigo para concetarse con el backend y editar
+}
+
+function handleDelete() {
+    console.log("activaste el evento borrar");
+    // codigo para concetarse con el backend y eliminar
+}
+
+
 
 // function die(message) {
 //     throw new Error(message);
