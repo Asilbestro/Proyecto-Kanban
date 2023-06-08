@@ -96,7 +96,7 @@ form1.addEventListener("submit", (event) => {
     const li_blue = document.createElement("li");
 
     const i_blue = document.createElement("i");
-    i_blue.className = "fas fa-square blue";
+    i_blue.className = "fas fa-square white";
 
     li_blue.appendChild(i_blue);
 
@@ -271,34 +271,55 @@ button_close_form2.addEventListener('click', () => {
     form2.classList.remove('form2');
 });
 
+
 more_function.forEach((icon_more_function) => {
     icon_more_function.addEventListener('click', (event) => {
-
         // evitar que se propague, y se expanda la tarjeta con hacer click al boton 
         event.stopPropagation();
 
         const show_more_functions = icon_more_function.querySelector(".container-functions");
         show_more_functions.classList.toggle("hidden");
 
-        const p_change_color = show_more_functions.querySelector(".p-change-color");
+        const div_change_color = show_more_functions.querySelector(".p-change-color");
         const p_edit = show_more_functions.querySelector(".p-edit");
         const p_delete = show_more_functions.querySelector(".p-delete");
 
         // remueve el evento de cada opcion de la tarea, para que no se acumule
-        p_change_color.removeEventListener('click', handleChangeColor);
+        div_change_color.removeEventListener('click', handleChangeColor);
         p_edit.removeEventListener('click', handleEdit);
         p_delete.removeEventListener('click', handleDelete);
 
         // escucha el si se hace click a cada una de las opciones de las tareas
-        p_change_color.addEventListener('click', handleChangeColor);
+        div_change_color.addEventListener('click', handleChangeColor);
         p_edit.addEventListener('click', handleEdit);
         p_delete.addEventListener('click', handleDelete);
-    });
+
+        // div_change_color.addEventListener('click', (event) => {
+        //     console.log(event.target);
+        // })
+    })
 });
 
-function handleChangeColor() {
-    console.log("activaste el evento cambiar de color");
+// const div_change_color = document.querySelector("color-task");
 
+function handleChangeColor(event) {
+    if (event.target.id === "i-red") {
+        select_task_element(event, '#fb4141');
+    } else if (event.target.id === "i-yellow") {
+        select_task_element(event, '#f8ef3b');
+    } else if (event.target.id === "i-green") {
+        select_task_element(event, '#2cf64e');
+    } else if (event.target.id === "i-white") {
+        select_task_element(event, '#ffffff');
+    }
+}
+
+// funcion para acceder
+function select_task_element(event, color) {
+    const current_element = event.target;
+
+    const task_element = current_element.closest('.task');
+    task_element.style.backgroundColor = color;
 }
 
 function handleEdit() {
@@ -311,8 +332,6 @@ function handleDelete() {
     // codigo para concetarse con el backend y eliminar
 }
 
-
-
-// function die(message) {
-//     throw new Error(message);
-// }
+function die(message) {
+    throw new Error(message);
+}
