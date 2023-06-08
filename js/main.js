@@ -1,6 +1,7 @@
 // Formulario para añadir tarea, y el boton que abre su formulario
 const form1 = document.querySelector("#form1");
 const button_add_task = document.getElementById("button-id");
+const button_column = document.querySelectorAll("#button-id");
 
 // Formulario para añadir columna, y el boton que abre su formulario
 const form2 = document.querySelector("#form2");
@@ -27,189 +28,461 @@ const zone_drop = document.querySelectorAll('card-column');
 
 const more_function = document.querySelectorAll('#more-function');
 
-// Cuando se hace click al boton añadir tarea, muestra el formulario
-button_add_task.addEventListener("click", (event) => {
-    event.preventDefault();
+let column_closer = "";
 
-    // Si se selecciona el boton añadir tarea, va a cerrar el formulario de añadir columna, si estuviese abierto
-    form2.classList.remove("expand-form");
-    form2.classList.remove("form2");
+const board1 = document.querySelector(".board");
 
-    form1.classList.toggle("expand-form");
-});
+// usamos la propagacion para acceder al elemento que se desea, y optimizamos el codigo, ya que no hay que activar un
+// event listener cada vez que queremos seleccionar un elemento 
+board1.addEventListener('click', (event) => {
+    console.log(event.target);
+    if (event.target && event.target.id === 'button-id') {
+        event.preventDefault();
 
-form1.addEventListener("submit", (event) => {
-    event.preventDefault();
+        // columna de donde se activo el evento añadir tarea
+        const parent = event.target;
+        column_closer = parent.closest('.card-column');
 
-    // Crear elemento div que contiene la tarea
-    const div = document.createElement("div");
-    div.className = 'task';
-    div.id = 'taskId';
-    div.draggable = true;
+        // Si se selecciona el boton añadir tarea, va a cerrar el formulario de añadir columna, si estuviese abierto
+        form2.classList.remove("expand-form");
+        form2.classList.remove("form2");
 
-    // Crear boton y div para "ver mas funciones" para las tareas
-    const button = document.createElement("button");
-    button.className = "button-icon fix";
-    // button.className = "";
-    button.id = "more-functions";
-    button.type = "button";
+        form1.classList.toggle("expand-form");
+    }
 
-    const img = document.createElement("img");
-    img.src = "https://cdn-icons-png.flaticon.com/128/10519/10519044.png";
+    if (event.target && event.target.id === "submit-id-task") {
+        event.preventDefault();
 
-    button.appendChild(img);
+        // Crear elemento div que contiene la tarea
+        const div = document.createElement("div");
+        div.className = 'task';
+        div.id = 'taskId';
+        div.draggable = true;
 
-    const div_container_functions = document.createElement("div");
-    div_container_functions.className = "container-functions";
-    div_container_functions.id = "container-functions-id";
+        // Crear boton y div para "ver mas funciones" para las tareas
+        const button = document.createElement("button");
+        button.className = "button-icon fix";
+        // button.className = "";
+        button.id = "more-functions";
+        button.type = "button";
 
-    button.appendChild(div_container_functions);
+        const img = document.createElement("img");
+        img.id = "img-more-icon";
+        img.src = "https://cdn-icons-png.flaticon.com/128/10519/10519044.png";
 
-    const div_change_color = document.createElement("div");
-    div_change_color.className = "p-change-color";
-    div_change_color.id = "color-task";
+        button.appendChild(img);
 
+        const div_container_functions = document.createElement("div");
+        div_container_functions.className = "container-functions";
+        div_container_functions.id = "container-functions-id";
 
-    const li_red = document.createElement("li");
+        button.appendChild(div_container_functions);
 
-    const i_red = document.createElement("i");
-    i_red.className = "fas fa-square red";
-
-    li_red.appendChild(i_red);
-
-    const li_yellow = document.createElement("li");
-
-    const i_yellow = document.createElement("i");
-    i_yellow.className = "fas fa-square yellow";
-
-    li_yellow.appendChild(i_yellow);
+        const div_change_color = document.createElement("div");
+        div_change_color.className = "p-change-color";
+        div_change_color.id = "color-task";
 
 
-    const li_green = document.createElement("li");
+        const li_red = document.createElement("li");
 
-    const i_green = document.createElement("i");
-    i_green.className = "fas fa-square green";
+        const i_red = document.createElement("i");
+        i_red.className = "fas fa-square red";
+        i_red.id = "i-red";
 
-    li_green.appendChild(i_green);
+        li_red.appendChild(i_red);
 
+        const li_yellow = document.createElement("li");
 
-    const li_blue = document.createElement("li");
+        const i_yellow = document.createElement("i");
+        i_yellow.className = "fas fa-square yellow";
+        i_yellow.id = "i-yellow";
 
-    const i_blue = document.createElement("i");
-    i_blue.className = "fas fa-square white";
-
-    li_blue.appendChild(i_blue);
-
-    div_change_color.appendChild(li_red);
-    div_change_color.appendChild(li_yellow);
-    div_change_color.appendChild(li_green);
-    div_change_color.appendChild(li_blue);
-
-    const div_p_edit = document.createElement("div");
-
-    const p_edit = document.createElement("p");
-    p_edit.className = "p-edit";
-    p_edit.textContent = "Editar";
-
-    div_p_edit.appendChild(p_edit);
-
-    const div_p_delete = document.createElement("div");
-
-    const p_delete = document.createElement("p");
-    p_delete.className = "p-delete";
-    p_delete.textContent = "Eliminar";
-
-    div_p_delete.appendChild(p_delete);
+        li_yellow.appendChild(i_yellow);
 
 
-    div_container_functions.appendChild(div_change_color);
-    div_container_functions.appendChild(div_p_edit);
-    div_container_functions.appendChild(div_p_delete);
+        const li_green = document.createElement("li");
 
-    div.appendChild(button);
+        const i_green = document.createElement("i");
+        i_green.className = "fas fa-square green";
+        i_green.id = "i-green";
 
-    // Crear elemento p dentro el div
-    const p = document.createElement('p');
-    p.textContent = input_task.value;
-
-    // Añadir elemento p al div
-    div.appendChild(p);
+        li_green.appendChild(i_green);
 
 
-    // Crear elemento div con información adicional dentro del otro div
-    const additional_info_div = document.createElement('div');
-    additional_info_div.className = 'additional-info';
+        const li_blue = document.createElement("li");
 
-    // Crear elementos p dentro del div con info adicional
-    const description_p = document.createElement('p');
-    description_p.textContent = 'Descripción de la tarea: ';
+        const i_blue = document.createElement("i");
+        i_blue.className = "fas fa-square white";
+        i_blue.id = "i-blue";
 
-    const text_description_p = document.createElement('p');
-    text_description_p.textContent = input_description.value;
+        li_blue.appendChild(i_blue);
 
-    const in_charge_p = document.createElement('p');
-    in_charge_p.textContent = 'Encargado: ' + input_in_charge.value;
+        div_change_color.appendChild(li_red);
+        div_change_color.appendChild(li_yellow);
+        div_change_color.appendChild(li_green);
+        div_change_color.appendChild(li_blue);
 
-    const estimated_hours_p = document.createElement('p');
-    estimated_hours_p.textContent = 'Vencimiento: ' + input_expiration.value;
+        const div_p_edit = document.createElement("div");
 
-    // Añadir los elementos p al div con info adicional
-    additional_info_div.appendChild(description_p);
-    additional_info_div.appendChild(in_charge_p);
-    additional_info_div.appendChild(estimated_hours_p);
-    description_p.appendChild(text_description_p);
+        const p_edit = document.createElement("p");
+        p_edit.className = "p-edit";
+        p_edit.textContent = "Editar";
 
-    // Añadir div adicional al div principal
-    div.appendChild(additional_info_div);
+        div_p_edit.appendChild(p_edit);
+
+        const div_p_delete = document.createElement("div");
+
+        const p_delete = document.createElement("p");
+        p_delete.className = "p-delete";
+        p_delete.textContent = "Eliminar";
+
+        div_p_delete.appendChild(p_delete);
 
 
-    div.addEventListener("dragstart", () => {
-        // cerrar el div que muestra mas opciones a las tareas (editar,eliminar, cambiar de color)
-        div.querySelector(".container-functions").classList.remove("hidden");
+        div_container_functions.appendChild(div_change_color);
+        div_container_functions.appendChild(div_p_edit);
+        div_container_functions.appendChild(div_p_delete);
 
-        div.classList.add("is-dragging");
-    });
+        div.appendChild(button);
 
-    div.addEventListener("dragend", () => {
-        div.classList.remove("is-dragging");
-    });
+        // Crear elemento p dentro el div
+        const p = document.createElement('p');
+        p.textContent = input_task.value;
 
-    div.addEventListener('click', () => {
-        additional_info_div.classList.toggle("expand");
-    });
+        // Añadir elemento p al div
+        div.appendChild(p);
 
-    button.addEventListener('click', (event) => {
-        event.stopPropagation();
+        // Crear elemento div con información adicional dentro del otro div
+        const additional_info_div = document.createElement('div');
+        additional_info_div.className = 'additional-info';
 
-        const show_more_functions = button.querySelector(".container-functions");
-        show_more_functions.classList.toggle("hidden");
+        // Crear elementos p dentro del div con info adicional
+        const description_p = document.createElement('p');
+        description_p.textContent = 'Descripción de la tarea: ';
 
-        const p_change_color = show_more_functions.querySelector(".p-change-color");
-        const p_edit = show_more_functions.querySelector(".p-edit");
-        const p_delete = show_more_functions.querySelector(".p-delete");
+        const text_description_p = document.createElement('p');
+        text_description_p.textContent = input_description.value;
+
+        const in_charge_p = document.createElement('p');
+        in_charge_p.textContent = 'Encargado: ' + input_in_charge.value;
+
+        const estimated_hours_p = document.createElement('p');
+        estimated_hours_p.textContent = 'Vencimiento: ' + input_expiration.value;
+
+        // Añadir los elementos p al div con info adicional
+        additional_info_div.appendChild(description_p);
+        additional_info_div.appendChild(in_charge_p);
+        additional_info_div.appendChild(estimated_hours_p);
+        description_p.appendChild(text_description_p);
+
+        // Añadir div adicional al div principal
+        div.appendChild(additional_info_div);
+
+
+        // div.addEventListener("dragstart", () => {
+        //     // cerrar el div que muestra mas opciones a las tareas (editar,eliminar, cambiar de color)
+        //     div.querySelector(".container-functions").classList.remove("hidden");
+
+        //     div.classList.add("is-dragging");
+        // });
+
+        // div.addEventListener("dragend", () => {
+        //     div.classList.remove("is-dragging");
+        // });
+
+        // div.addEventListener('click', () => {
+        //     additional_info_div.classList.toggle("expand");
+        // });
+
+        // button.addEventListener('click', (event) => {
+        //     event.stopPropagation();
+
+        //     const show_more_functions = button.querySelector(".container-functions");
+        //     show_more_functions.classList.toggle("hidden");
+
+        //     const p_change_color = show_more_functions.querySelector(".p-change-color");
+        //     const p_edit = show_more_functions.querySelector(".p-edit");
+        //     const p_delete = show_more_functions.querySelector(".p-delete");
+
+        //     // remueve el evento de cada opcion de la tarea, para que no se acumule
+        //     p_change_color.removeEventListener('click', handleChangeColor);
+        //     p_edit.removeEventListener('click', handleEdit);
+        //     p_delete.removeEventListener('click', handleDelete);
+
+        //     // escucha el si se hace click a cada una de las opciones de las tareas
+        //     p_change_color.addEventListener('click', handleChangeColor);
+        //     p_edit.addEventListener('click', handleEdit);
+        //     p_delete.addEventListener('click', handleDelete);
+
+        // });
+
+        // Añadir el div principal a la columna de tareas
+        column_closer.appendChild(div);
+
+        // Borrar campo input una vez agregada la tarea
+        input_task.value = "";
+        input_description.value = "";
+        input_expiration.value = "";
+        input_in_charge.value = "";
+
+        form1.classList.toggle("expand-form");
+    }
+
+    if (event.target && event.target.id === "more-function" || event.target.id === "img-more-icon") {
+        // container mas funciones de donde se activo
+        const icon_more_function = event.target;
+        container_functions = icon_more_function.parentNode.querySelector('.container-functions');
+
+        container_functions.classList.toggle("hidden");
+
+        const div_change_color = container_functions.querySelector(".p-change-color");
+        const p_edit = container_functions.querySelector(".p-edit");
+        const p_delete = container_functions.querySelector(".p-delete");
+
+        console.log(div_change_color);
 
         // remueve el evento de cada opcion de la tarea, para que no se acumule
-        p_change_color.removeEventListener('click', handleChangeColor);
+        div_change_color.removeEventListener('click', handleChangeColor);
         p_edit.removeEventListener('click', handleEdit);
         p_delete.removeEventListener('click', handleDelete);
 
         // escucha el si se hace click a cada una de las opciones de las tareas
-        p_change_color.addEventListener('click', handleChangeColor);
+        div_change_color.addEventListener('click', handleChangeColor);
         p_edit.addEventListener('click', handleEdit);
         p_delete.addEventListener('click', handleDelete);
+    }
 
-    });
+    if (event.target && event.target.id === "i-red" || event.target.id === "i-yellow" || event.target.id === "i-green" || event.target.id === "i-white") {
+        const i_color = event.target;
+        const container_functions = i_color.closest(".container-functions");
+        container_functions.classList.toggle("hidden");
+    }
 
-    // Añadir el div principal a la columna de tareas
-    task_column.appendChild(div);
+    // more_function.forEach((icon_more_function) => {
+    //     icon_more_function.addEventListener('click', (event) => {
+    //         // evitar que se propague, y se expanda la tarjeta con hacer click al boton 
+    //         event.stopPropagation();
 
-    // Borrar campo input una vez agregada la tarea
-    input_task.value = "";
-    input_description.value = "";
-    input_expiration.value = "";
-    input_in_charge.value = "";
+    //         const show_more_functions = icon_more_function.querySelector(".container-functions");
+    //         show_more_functions.classList.toggle("hidden");
 
-    form1.classList.toggle("expand-form");
+    //         console.log(show_more_functions);
+
+    //         const div_change_color = show_more_functions.querySelector(".p-change-color");
+    //         const p_edit = show_more_functions.querySelector(".p-edit");
+    //         const p_delete = show_more_functions.querySelector(".p-delete");
+
+    //         // remueve el evento de cada opcion de la tarea, para que no se acumule
+    //         div_change_color.removeEventListener('click', handleChangeColor);
+    //         p_edit.removeEventListener('click', handleEdit);
+    //         p_delete.removeEventListener('click', handleDelete);
+
+    //         // escucha el si se hace click a cada una de las opciones de las tareas
+    //         div_change_color.addEventListener('click', handleChangeColor);
+    //         p_edit.addEventListener('click', handleEdit);
+    //         p_delete.addEventListener('click', handleDelete);
+
+    //         // div_change_color.addEventListener('click', (event) => {
+    //         //     console.log(event.target);
+    //         // })
+    //     })
+    // });
+
+})
+
+
+// button_column.forEach((column) => {
+//     column.addEventListener('click', (event) => {
+
+//         event.preventDefault();
+
+//         // columna de donde se activo el evento añadir tarea
+//         const parent = event.target;
+//         column_closer = parent.closest('.card-column');
+
+//         // Si se selecciona el boton añadir tarea, va a cerrar el formulario de añadir columna, si estuviese abierto
+//         form2.classList.remove("expand-form");
+//         form2.classList.remove("form2");
+
+//         form1.classList.toggle("expand-form");
+
+//     })
+// })
+
+
+form1.addEventListener("submit", (event) => {
+    // event.preventDefault();
+
+    // // Crear elemento div que contiene la tarea
+    // const div = document.createElement("div");
+    // div.className = 'task';
+    // div.id = 'taskId';
+    // div.draggable = true;
+
+    // // Crear boton y div para "ver mas funciones" para las tareas
+    // const button = document.createElement("button");
+    // button.className = "button-icon fix";
+    // // button.className = "";
+    // button.id = "more-functions";
+    // button.type = "button";
+
+    // const img = document.createElement("img");
+    // img.src = "https://cdn-icons-png.flaticon.com/128/10519/10519044.png";
+
+    // button.appendChild(img);
+
+    // const div_container_functions = document.createElement("div");
+    // div_container_functions.className = "container-functions";
+    // div_container_functions.id = "container-functions-id";
+
+    // button.appendChild(div_container_functions);
+
+    // const div_change_color = document.createElement("div");
+    // div_change_color.className = "p-change-color";
+    // div_change_color.id = "color-task";
+
+
+    // const li_red = document.createElement("li");
+
+    // const i_red = document.createElement("i");
+    // i_red.className = "fas fa-square red";
+
+    // li_red.appendChild(i_red);
+
+    // const li_yellow = document.createElement("li");
+
+    // const i_yellow = document.createElement("i");
+    // i_yellow.className = "fas fa-square yellow";
+
+    // li_yellow.appendChild(i_yellow);
+
+
+    // const li_green = document.createElement("li");
+
+    // const i_green = document.createElement("i");
+    // i_green.className = "fas fa-square green";
+
+    // li_green.appendChild(i_green);
+
+
+    // const li_blue = document.createElement("li");
+
+    // const i_blue = document.createElement("i");
+    // i_blue.className = "fas fa-square white";
+
+    // li_blue.appendChild(i_blue);
+
+    // div_change_color.appendChild(li_red);
+    // div_change_color.appendChild(li_yellow);
+    // div_change_color.appendChild(li_green);
+    // div_change_color.appendChild(li_blue);
+
+    // const div_p_edit = document.createElement("div");
+
+    // const p_edit = document.createElement("p");
+    // p_edit.className = "p-edit";
+    // p_edit.textContent = "Editar";
+
+    // div_p_edit.appendChild(p_edit);
+
+    // const div_p_delete = document.createElement("div");
+
+    // const p_delete = document.createElement("p");
+    // p_delete.className = "p-delete";
+    // p_delete.textContent = "Eliminar";
+
+    // div_p_delete.appendChild(p_delete);
+
+
+    // div_container_functions.appendChild(div_change_color);
+    // div_container_functions.appendChild(div_p_edit);
+    // div_container_functions.appendChild(div_p_delete);
+
+    // div.appendChild(button);
+
+    // // Crear elemento p dentro el div
+    // const p = document.createElement('p');
+    // p.textContent = input_task.value;
+
+    // // Añadir elemento p al div
+    // div.appendChild(p);
+
+
+    // // Crear elemento div con información adicional dentro del otro div
+    // const additional_info_div = document.createElement('div');
+    // additional_info_div.className = 'additional-info';
+
+    // // Crear elementos p dentro del div con info adicional
+    // const description_p = document.createElement('p');
+    // description_p.textContent = 'Descripción de la tarea: ';
+
+    // const text_description_p = document.createElement('p');
+    // text_description_p.textContent = input_description.value;
+
+    // const in_charge_p = document.createElement('p');
+    // in_charge_p.textContent = 'Encargado: ' + input_in_charge.value;
+
+    // const estimated_hours_p = document.createElement('p');
+    // estimated_hours_p.textContent = 'Vencimiento: ' + input_expiration.value;
+
+    // // Añadir los elementos p al div con info adicional
+    // additional_info_div.appendChild(description_p);
+    // additional_info_div.appendChild(in_charge_p);
+    // additional_info_div.appendChild(estimated_hours_p);
+    // description_p.appendChild(text_description_p);
+
+    // // Añadir div adicional al div principal
+    // div.appendChild(additional_info_div);
+
+
+    // div.addEventListener("dragstart", () => {
+    //     // cerrar el div que muestra mas opciones a las tareas (editar,eliminar, cambiar de color)
+    //     div.querySelector(".container-functions").classList.remove("hidden");
+
+    //     div.classList.add("is-dragging");
+    // });
+
+    // div.addEventListener("dragend", () => {
+    //     div.classList.remove("is-dragging");
+    // });
+
+    // div.addEventListener('click', () => {
+    //     additional_info_div.classList.toggle("expand");
+    // });
+
+    // button.addEventListener('click', (event) => {
+    //     event.stopPropagation();
+
+    //     const show_more_functions = button.querySelector(".container-functions");
+    //     show_more_functions.classList.toggle("hidden");
+
+    //     const p_change_color = show_more_functions.querySelector(".p-change-color");
+    //     const p_edit = show_more_functions.querySelector(".p-edit");
+    //     const p_delete = show_more_functions.querySelector(".p-delete");
+
+    //     // remueve el evento de cada opcion de la tarea, para que no se acumule
+    //     p_change_color.removeEventListener('click', handleChangeColor);
+    //     p_edit.removeEventListener('click', handleEdit);
+    //     p_delete.removeEventListener('click', handleDelete);
+
+    //     // escucha el si se hace click a cada una de las opciones de las tareas
+    //     p_change_color.addEventListener('click', handleChangeColor);
+    //     p_edit.addEventListener('click', handleEdit);
+    //     p_delete.addEventListener('click', handleDelete);
+
+    // });
+
+    // // Añadir el div principal a la columna de tareas
+    // column_closer.appendChild(div);
+
+
+    // // Borrar campo input una vez agregada la tarea
+    // input_task.value = "";
+    // input_description.value = "";
+    // input_expiration.value = "";
+    // input_in_charge.value = "";
+
+    // form1.classList.toggle("expand-form");
 });
 
 // Evento para cerrar formulario
@@ -244,6 +517,13 @@ form2.addEventListener('submit', (event) => {
     h3_column.className = 'title-column'
     h3_column.textContent = input_column.value;
 
+    const button = document.createElement('button');
+    button.className = "btn-form add-task";
+    button.id = "button-id";
+    button.type = "submit";
+    button.textContent = "Añadir Tarea +";
+
+    div_column.appendChild(button);
     div_column.appendChild(h3_column);
     board.appendChild(div_column);
 
@@ -251,6 +531,11 @@ form2.addEventListener('submit', (event) => {
 
     form2.classList.toggle("expand-form");
     form2.classList.toggle("form2");
+
+    // columna de donde se activo el evento añadir tarea
+    const parent = event.target;
+    column_closer = parent.closest('.card-column');
+    console.log(column_closer);
 
     // arrastrar elementos dentro de la columna nueva
     div_column.addEventListener('dragover', (event) => {
@@ -272,35 +557,35 @@ button_close_form2.addEventListener('click', () => {
 });
 
 
-more_function.forEach((icon_more_function) => {
-    icon_more_function.addEventListener('click', (event) => {
-        // evitar que se propague, y se expanda la tarjeta con hacer click al boton 
-        event.stopPropagation();
 
-        const show_more_functions = icon_more_function.querySelector(".container-functions");
-        show_more_functions.classList.toggle("hidden");
+// more_function.forEach((icon_more_function) => {
+//     icon_more_function.addEventListener('click', (event) => {
+//         // evitar que se propague, y se expanda la tarjeta con hacer click al boton 
+//         event.stopPropagation();
 
-        const div_change_color = show_more_functions.querySelector(".p-change-color");
-        const p_edit = show_more_functions.querySelector(".p-edit");
-        const p_delete = show_more_functions.querySelector(".p-delete");
+//         const show_more_functions = icon_more_function.querySelector(".container-functions");
+//         show_more_functions.classList.toggle("hidden");
 
-        // remueve el evento de cada opcion de la tarea, para que no se acumule
-        div_change_color.removeEventListener('click', handleChangeColor);
-        p_edit.removeEventListener('click', handleEdit);
-        p_delete.removeEventListener('click', handleDelete);
+//         const div_change_color = show_more_functions.querySelector(".p-change-color");
+//         const p_edit = show_more_functions.querySelector(".p-edit");
+//         const p_delete = show_more_functions.querySelector(".p-delete");
 
-        // escucha el si se hace click a cada una de las opciones de las tareas
-        div_change_color.addEventListener('click', handleChangeColor);
-        p_edit.addEventListener('click', handleEdit);
-        p_delete.addEventListener('click', handleDelete);
+//         // remueve el evento de cada opcion de la tarea, para que no se acumule
+//         div_change_color.removeEventListener('click', handleChangeColor);
+//         p_edit.removeEventListener('click', handleEdit);
+//         p_delete.removeEventListener('click', handleDelete);
 
-        // div_change_color.addEventListener('click', (event) => {
-        //     console.log(event.target);
-        // })
-    })
-});
+//         // escucha el si se hace click a cada una de las opciones de las tareas
+//         div_change_color.addEventListener('click', handleChangeColor);
+//         p_edit.addEventListener('click', handleEdit);
+//         p_delete.addEventListener('click', handleDelete);
 
-// const div_change_color = document.querySelector("color-task");
+//         // div_change_color.addEventListener('click', (event) => {
+//         //     console.log(event.target);
+//         // })
+//     })
+// });
+
 
 function handleChangeColor(event) {
     if (event.target.id === "i-red") {
@@ -312,6 +597,7 @@ function handleChangeColor(event) {
     } else if (event.target.id === "i-white") {
         select_task_element(event, '#ffffff');
     }
+
 }
 
 // funcion para acceder

@@ -35,10 +35,10 @@
                 <label for="in_charge">Encargado</label>
                 <input type="text" name="in_charge" id="in-charge-task" required>
 
-                <button type="submit" id="submit-id" class="btn-form submit">Añadir Tarea</button>
+                <button type="submit" id="submit-id-task" class="btn-form submit">Añadir Tarea</button>
             </div>
         </form>
-        <button type="submit" id="button-id" class="btn-form">Añadir Tarea +</button>
+        <!-- <button type="submit" id="button-id" class="btn-form">Añadir Tarea +</button> -->
 
         <form class="form" id="form2">
             <div class="content-form">
@@ -58,12 +58,14 @@
 
         <div class="column">
             <div class="card-column" id="todo-column">
+
                 <h3 class="title-column">Pendiente</h3>
+                <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
                     <!-- Icono para mas opciones en la tarea -->
                     <button type="button" class="button-icon fix" id="more-function">
-                        <img src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
+                        <img id="img-more-icon" src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
 
                         <div class="container-functions" id="container-functions-id">
                             <div class="p-change-color" id="color-task">
@@ -92,15 +94,17 @@
                         <p>Vencimiento: 04/03/2023</p>
                     </div>
                 </div>
+
             </div>
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">En Progreso</h3>
+                <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
                     <!-- Icono para mas opciones en la tarea -->
                     <button type="button" class="button-icon fix" id="more-function">
-                        <img src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
+                        <img id="img-more-icon" src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
 
                         <div class="container-functions" id="container-functions-id">
                             <div class="p-change-color" id="color-task">
@@ -133,11 +137,12 @@
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">A Revisar</h3>
+                <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
                     <!-- Icono para mas opciones en la tarea -->
                     <button type="button" class="button-icon fix" id="more-function">
-                        <img src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
+                        <img id="img-more-icon" src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
 
                         <div class="container-functions" id="container-functions-id">
                             <div class="p-change-color" id="color-task">
@@ -169,12 +174,13 @@
 
             <div class="card-column" id="todo-column">
                 <h3 class="title-column">Hecho</h3>
+                <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
                     <!-- Icono para mas opciones en la tarea -->
 
                     <button type="button" class="button-icon fix" id="more-function">
-                        <img src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
+                        <img id="img-more-icon" src="https://cdn-icons-png.flaticon.com/128/10519/10519044.png" alt="icon-delete">
 
                         <div class="container-functions" id="container-functions-id">
                             <div class="p-change-color" id="color-task">

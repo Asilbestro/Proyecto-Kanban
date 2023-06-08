@@ -127,6 +127,11 @@
     height: 23px;
 }
 
+.add-task {
+    margin: 0;
+    width: 60%;
+}
+
 /* Icono para hacer mas funciones (borrar,editar y cambiar color  */
 .more:hover {
     box-shadow: 1px 1px 1px rgb(132, 122, 122);
