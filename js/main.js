@@ -16,6 +16,9 @@ const input_description = document.getElementById('description-task');
 const input_expiration = document.getElementById('expiration-task');
 const input_in_charge = document.getElementById('in-charge-task');
 
+// Valor del cambio del titulo del h3 en cada columna
+const input_h3 = document.getElementById("input-change-title-id");
+
 const task_column = document.getElementById("todo-column");
 
 // Boton para cerrar el formulario 1
@@ -229,7 +232,7 @@ board1.addEventListener('click', (event) => {
         parent.classList.remove("expand-form");
     }
 
-    // Boton para agregar columna 
+    // Al hacer click al botono de añadir columna, intercambia la clase para mostrar el formulario
     if (event.target && event.target.id === "submit-id-column") {
         event.preventDefault();
 
@@ -249,6 +252,12 @@ board1.addEventListener('click', (event) => {
         div_column.className = 'card-column';
         div_column.id = 'todo-column';
 
+        const img = document.createElement('img');
+        img.id = "img-delete-column";
+        img.className = "img-column";
+        img.src = "https://cdn-icons-png.flaticon.com/128/7666/7666109.png";
+        img.alt = "icono de borrar";
+
         const h3_column = document.createElement('h3');
         h3_column.className = 'title-column'
         h3_column.textContent = input_column.value;
@@ -259,6 +268,7 @@ board1.addEventListener('click', (event) => {
         button.type = "submit";
         button.textContent = "Añadir Tarea +";
 
+        div_column.appendChild(img);
         div_column.appendChild(h3_column);
         div_column.appendChild(button);
         board.appendChild(div_column);
@@ -280,6 +290,44 @@ board1.addEventListener('click', (event) => {
         form2.classList.remove('expand-form');
         form2.classList.remove('form2');
     }
+
+    // bloque para mandar datos al servidor cuando se activa click en icono delete column
+    if (event.target && event.target.id === "img-delete-column") {
+        console.log("activaste el evento click de borrar", event.target);
+
+        // codigo para realizar elimancion en la BD
+    }
+
+    // bloque para cambiar el h3 de cada columna
+    if (event.target && event.target.id === "h3-id") {
+        const h3 = event.target;
+        h3.classList.toggle("hidden-title");
+
+        const input_change_h3 = h3.parentNode.querySelector("#input-change-title-id");
+        input_change_h3.classList.toggle("hidden-title");
+
+        const input_submit = h3.parentNode.querySelector("#submit-h3-id");
+        input_submit.classList.toggle("hidden-title");
+    }
+
+    // bloque para tomar el valor del input para cambiar el titulo, y muestra el nuevo
+    if (event.target && event.target.id === "submit-h3-id") {
+        const h3 = document.getElementById("h3-id");
+        // h3.innerHTML = input_h3.value;
+
+        console.log("mandar a la BD cuando conectemos al backend");
+
+        // const input_change_h3 = h3.parentNode.querySelector("#input-change-title-id");
+
+
+        // h3.classList.toggle("hidden-title");
+
+        // input_change_h3.classList.toggle("hidden-title");
+
+        // const input_submit = h3.parentNode.querySelector("#submit-h3-id");
+        // input_submit.classList.toggle("hidden-title");
+    }
+
 })
 
 function handleChangeColor(event) {

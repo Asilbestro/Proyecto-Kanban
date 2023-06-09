@@ -43,7 +43,8 @@
         <form class="form" id="form2">
             <div class="content-form">
                 <button type="button" class="button-icon" id="close-form2" aria-label="Cerrar">
-                    <img id="img-close-form2" src="https://cdn-icons-png.flaticon.com/128/6467/6467134.png" alt="icon-delete">
+                    <img id="img-close-form2" src="https://cdn-icons-png.flaticon.com/128/6467/6467134.png"
+                        alt="icon-delete">
                 </button>
 
                 <label for="add-column">Añadir columna</label>
@@ -58,8 +59,14 @@
 
         <div class="column">
             <div class="card-column" id="todo-column">
+                <!-- Icono para borrar columna -->
+                <img class="img-column" id="img-delete-column"
+                    src="https://cdn-icons-png.flaticon.com/128/7666/7666109.png" alt="icono de borrar">
 
-                <h3 class="title-column">Pendiente</h3>
+                <input id="input-change-title-id" class="change-title hidden-title" type="text">
+                <input id="submit-h3-id" class="submit-h3 hidden-title" type="submit">
+                <h3 id="h3-id" class="title-column">Pendiente</h3>
+
                 <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
@@ -99,7 +106,13 @@
             </div>
 
             <div class="card-column" id="todo-column">
-                <h3 class="title-column">En Progreso</h3>
+                <img class="img-column" id="img-delete-column"
+                    src="https://cdn-icons-png.flaticon.com/128/7666/7666109.png" alt="icono de borrar">
+
+                <input id="input-change-title-id" class="change-title hidden-title" type="text">
+                <input id="submit-h3-id" class="submit-h3 hidden-title" type="submit">
+                <h3 id="h3-id" class="title-column">En progreso</h3>
+
                 <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
@@ -138,7 +151,13 @@
             </div>
 
             <div class="card-column" id="todo-column">
-                <h3 class="title-column">A Revisar</h3>
+                <img class="img-column" id="img-delete-column"
+                    src="https://cdn-icons-png.flaticon.com/128/7666/7666109.png" alt="icono de borrar">
+
+                <input id="input-change-title-id" class="change-title hidden-title" type="text">
+                <input id="submit-h3-id" class="submit-h3 hidden-title" type="submit">
+                <h3 id="h3-id" class="title-column">A revisar</h3>
+
                 <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
@@ -176,7 +195,13 @@
             </div>
 
             <div class="card-column" id="todo-column">
-                <h3 class="title-column">Hecho</h3>
+                <img class="img-column" id="img-delete-column"
+                    src="https://cdn-icons-png.flaticon.com/128/7666/7666109.png" alt="icono de borrar">
+
+                <input id="input-change-title-id" class="change-title hidden-title" type="text">
+                <input id="submit-h3-id" class="submit-h3 hidden-title" type="submit">
+                <h3 id="h3-id" class="title-column">Pendiente</h3>
+
                 <button type="submit" id="button-id" class="btn-form add-task">Añadir Tarea +</button>
 
                 <div class="task" id="taskId" draggable="true">
