@@ -1,12 +1,3 @@
-// Formulario para añadir tarea, y el boton que abre su formulario
-const form1 = document.querySelector("#form1");
-const button_add_task = document.getElementById("button-id");
-const button_column = document.querySelectorAll("#button-id");
-
-// Formulario para añadir columna, y el boton que abre su formulario
-// const form2 = document.querySelector("#form2");
-const button_add_column = document.getElementById("submit-id-column");
-
 // contenedor de las columnas
 const board = document.querySelector('.column');
 
@@ -19,20 +10,13 @@ const input_in_charge = document.getElementById('in-charge-task');
 // Valor del cambio del titulo del h3 en cada columna
 const input_h3 = document.getElementById("input-change-title-id");
 
-const task_column = document.getElementById("todo-column");
-
-// Boton para cerrar el formulario 1
-const button_close_form = document.getElementById('close-form');
-const button_close_form2 = document.getElementById('close-form2');
-
 // Valor del formulario para agregar columna
 const input_column = document.getElementById('name-column');
-const zone_drop = document.querySelectorAll('card-column');
 
-const more_function = document.querySelectorAll('#more-function');
-
-
+// referencia al tablero completo 
 const board1 = document.querySelector(".board");
+
+// variable para pasar el valor de donde se activo el evento click de las columnas
 let column_closer = "";
 
 
