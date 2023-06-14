@@ -1,5 +1,5 @@
 // contenedor de las columnas
-const board = document.querySelector('.column');
+const card_container = document.querySelector('.column');
 
 // Valores del formulario para agregar tarea
 const input_task = document.getElementById('name-task');
@@ -14,7 +14,10 @@ const input_h3 = document.getElementById("input-change-title-id");
 const input_column = document.getElementById('name-column');
 
 // referencia al tablero completo 
-const board1 = document.querySelector(".board");
+const board = document.querySelector(".board");
+
+// referencia a contenedor de las columnas
+// const card_container = document.getElementById('column-id');
 
 // variable para pasar el valor de donde se activo el evento click de las columnas
 let column_closer = "";
@@ -22,7 +25,7 @@ let column_closer = "";
 
 // usamos la propagacion para acceder al elemento que se desea, y optimizamos el codigo, ya que no hay que activar un
 // event listener cada vez que queremos seleccionar un elemento 
-board1.addEventListener('click', (event) => {
+board.addEventListener('click', (event) => {
 
     // expandir tarea al clickear cada una de ellas
     if (event.target && event.target.id === "taskId" || event.target.tagName === "P" || event.target.id === ".additional-info") {
@@ -172,7 +175,6 @@ board1.addEventListener('click', (event) => {
         // Añadir div adicional al div principal
         div.appendChild(additional_info_div);
 
-        console.log(column_closer);
         // Añadir el div principal a la columna de tareas
         column_closer.appendChild(div);
 
@@ -265,7 +267,7 @@ board1.addEventListener('click', (event) => {
         div_column.appendChild(img);
         div_column.appendChild(h3_column);
         div_column.appendChild(button);
-        board.appendChild(div_column);
+        card_container.appendChild(div_column);
 
         input_column.value = "";
 
@@ -356,13 +358,9 @@ function handleDelete() {
 }
 
 
-function die(message) {
-    throw new Error(message);
-}
-
 
 // Drag y drop
-board1.addEventListener("dragstart", (event) => {
+board.addEventListener("dragstart", (event) => {
     if (event.target && event.target.id === "taskId" && event.target.draggable) {
         const task = event.target;
 
@@ -373,7 +371,7 @@ board1.addEventListener("dragstart", (event) => {
     }
 })
 
-board1.addEventListener("dragend", (event) => {
+board.addEventListener("dragend", (event) => {
     if (event.target && event.target.id === "taskId" && event.target.draggable) {
         const task = event.target;
 
@@ -381,7 +379,7 @@ board1.addEventListener("dragend", (event) => {
     }
 })
 
-board1.addEventListener("dragover", (event) => {
+board.addEventListener("dragover", (event) => {
     event.preventDefault();
 
     if (event.target && event.target.id === "todo-column") {
@@ -422,3 +420,187 @@ function insertAboveTask(zone, mouseY) {
 
     return closest_task;
 }
+
+
+fetch('../tasks.json')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+
+        // recorrer las tarjetas y generar el HTML para cada una
+        for (const column of data.columnas) {
+            console.log(column);
+            // crear los elementos HTML para la tarjeta
+            const div_card_column = document.createElement('div');
+            div_card_column.className = "card-column";
+            div_card_column.id = "todo-column";
+
+            // Icono para borrar columna
+            const img_column = document.createElement('img');
+            img_column.className = "img-column";
+            img_column.id = "img-delete-column";
+            img_column.src = "https://cdn-icons-png.flaticon.com/128/7666/7666109.png";
+            img_column.alt = "icono de borrar";
+
+            //agregar los inputs para cambiar los h3 de cada columna
+
+            const h3_column = document.createElement('h3');
+            h3_column.className = "title-column";
+            h3_column.id = "h3-id";
+            h3_column.textContent = column.nombre;
+
+            const button_add_task = document.createElement('button');
+            button_add_task.type = "submit";
+            button_add_task.className = "btn-form add-task";
+            button_add_task.id = "button-id";
+            button_add_task.textContent = "Añadir Tarea +";
+
+            // colocando los elementos a las columnas
+            div_card_column.appendChild(img_column);
+            div_card_column.appendChild(h3_column);
+            div_card_column.appendChild(button_add_task);
+
+            card_container.appendChild(div_card_column);
+
+            for (const task of data.tareas) {
+                if (column.id === task.id_columna) {
+                    console.log(column.nombre);
+                    console.log(task.nombre);
+
+                    // Crear elemento div que contiene la tarea
+                    const div_task = document.createElement("div");
+                    div_task.className = 'task';
+                    div_task.id = 'taskId';
+                    div_task.draggable = true;
+
+                    // Crear boton y div para "ver mas funciones" para las tareas
+                    const button = document.createElement("button");
+                    button.className = "button-icon fix";
+                    button.id = "more-functions";
+                    button.type = "button";
+
+                    const img = document.createElement("img");
+                    img.id = "img-more-icon";
+                    img.src = "https://cdn-icons-png.flaticon.com/128/10519/10519044.png";
+                    img.alt = "icon-delete";
+
+                    button.appendChild(img);
+
+                    const div_container_functions = document.createElement("div");
+                    div_container_functions.className = "container-functions";
+                    div_container_functions.id = "container-functions-id";
+
+                    button.appendChild(div_container_functions);
+
+                    const div_change_color = document.createElement("div");
+                    div_change_color.className = "p-change-color";
+                    div_change_color.id = "color-task";
+
+
+                    const li_red = document.createElement("li");
+
+                    const i_red = document.createElement("i");
+                    i_red.className = "fas fa-square red";
+                    i_red.id = "i-red";
+
+                    li_red.appendChild(i_red);
+
+                    const li_yellow = document.createElement("li");
+
+                    const i_yellow = document.createElement("i");
+                    i_yellow.className = "fas fa-square yellow";
+                    i_yellow.id = "i-yellow";
+
+                    li_yellow.appendChild(i_yellow);
+
+
+                    const li_green = document.createElement("li");
+
+                    const i_green = document.createElement("i");
+                    i_green.className = "fas fa-square green";
+                    i_green.id = "i-green";
+
+                    li_green.appendChild(i_green);
+
+
+                    const li_white = document.createElement("li");
+
+                    const i_white = document.createElement("i");
+                    i_white.className = "fas fa-square white";
+                    i_white.id = "i-white";
+
+                    li_white.appendChild(i_white);
+
+                    div_change_color.appendChild(li_red);
+                    div_change_color.appendChild(li_yellow);
+                    div_change_color.appendChild(li_green);
+                    div_change_color.appendChild(li_white);
+
+                    const div_p_edit = document.createElement("div");
+
+                    const p_edit = document.createElement("p");
+                    p_edit.className = "p-edit";
+                    p_edit.textContent = "Editar";
+
+                    div_p_edit.appendChild(p_edit);
+
+                    const div_p_delete = document.createElement("div");
+
+                    const p_delete = document.createElement("p");
+                    p_delete.className = "p-delete";
+                    p_delete.textContent = "Eliminar";
+
+                    div_p_delete.appendChild(p_delete);
+
+                    div_container_functions.appendChild(div_change_color);
+                    div_container_functions.appendChild(div_p_edit);
+                    div_container_functions.appendChild(div_p_delete);
+
+                    div_task.appendChild(button);
+
+                    // Crear elemento p dentro el div
+                    const p = document.createElement('p');
+                    p.textContent = task.nombre;
+
+                    // Añadir elemento p al div
+                    div_task.appendChild(p);
+
+                    // Crear elemento div con información adicional dentro del otro div
+                    const additional_info_div = document.createElement('div');
+                    additional_info_div.className = 'additional-info';
+
+                    // Crear elementos p dentro del div con info adicional
+                    const description_p = document.createElement('p');
+                    description_p.textContent = 'Descripción de la tarea: ';
+
+                    const text_description_p = document.createElement('p');
+                    text_description_p.textContent = task.descripcion_de_la_tarea;
+
+                    const in_charge_p = document.createElement('p');
+                    in_charge_p.textContent = 'Encargado: ' + task.encargado;
+
+                    const estimated_hours_p = document.createElement('p');
+                    estimated_hours_p.textContent = 'Vencimiento: ' + task.vencimiento;
+
+                    // añadir los elementos p al div con info adicional
+                    additional_info_div.appendChild(description_p);
+                    additional_info_div.appendChild(in_charge_p);
+                    additional_info_div.appendChild(estimated_hours_p);
+                    description_p.appendChild(text_description_p);
+
+                    // añadir div adicional al div principal
+                    div_task.appendChild(additional_info_div);
+
+                    // añadir la tarea al contenedor de la columna, según corresponda
+                    div_card_column.appendChild(div_task);
+
+                }
+
+            }
+        }
+    })
+
+
+    .catch(error => {
+        console.error('Error al cargar el JSON: ', error);
+    })
