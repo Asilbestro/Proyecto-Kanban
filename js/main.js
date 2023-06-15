@@ -1,3 +1,6 @@
+// referencia al tablero completo 
+const board = document.querySelector(".board");
+
 // contenedor de las columnas
 const card_container = document.querySelector('.column');
 
@@ -13,11 +16,6 @@ const input_h3 = document.getElementById("input-change-title-id");
 // Valor del formulario para agregar columna
 const input_column = document.getElementById('name-column');
 
-// referencia al tablero completo 
-const board = document.querySelector(".board");
-
-// referencia a contenedor de las columnas
-// const card_container = document.getElementById('column-id');
 
 // variable para pasar el valor de donde se activo el evento click de las columnas
 let column_closer = "";
@@ -35,6 +33,9 @@ board.addEventListener('click', (event) => {
 
         const additional_info = column_close.querySelector('.additional-info');
         additional_info.classList.toggle("expand");
+
+        const div_note = column_close.querySelector('.notes');
+        div_note.classList.toggle("show-notes");
     }
 
     // si se hace click al boton para añadir tarea, mustra el formulario
@@ -48,6 +49,7 @@ board.addEventListener('click', (event) => {
         form1.classList.toggle("expand-form");
     }
 
+    // agregar tarea a la columna donde corresponda
     if (event.target && event.target.id === "submit-id-task") {
         event.preventDefault();
 
@@ -175,6 +177,52 @@ board.addEventListener('click', (event) => {
         // Añadir div adicional al div principal
         div.appendChild(additional_info_div);
 
+
+        // bloque para agregar notas a la tarea
+        const add_notes = document.createElement('div');
+        add_notes.className = "notes";
+
+        const p_title_note = document.createElement('p');
+        p_title_note.className = "p-title-note";
+        p_title_note.textContent = "Notas:";
+
+        add_notes.appendChild(p_title_note);
+
+        const div_content_notes = document.createElement('div');
+        div_content_notes.className = "content-notes";
+
+        add_notes.appendChild(div_content_notes);
+
+        const p_note = document.createElement('p');
+        p_note.textContent = "";
+
+        div_content_notes.appendChild(p_note);
+
+        const label_notes = document.createElement('label');
+        label_notes.htmlFor = "notes";
+        label_notes.textContent = "Añadir Notas:"
+
+        add_notes.appendChild(label_notes);
+
+        const input_notes = document.createElement('input');
+        input_notes.className = "input-note";
+        input_notes.id = "input-note-id";
+        input_notes.name = "notes"
+        input_notes.type = "text";
+
+        add_notes.appendChild(input_notes);
+
+        const button_notes = document.createElement('button');
+        button_notes.className = "btn-form submit";
+        button_notes.id = "submit-note";
+        button_notes.type = "submit";
+        button_notes.textContent = "Añadir Nota";
+
+        add_notes.appendChild(button_notes);
+
+        div.appendChild(add_notes);
+
+
         // Añadir el div principal a la columna de tareas
         column_closer.appendChild(div);
 
@@ -213,7 +261,17 @@ board.addEventListener('click', (event) => {
     // cerrar el div para cambiar de color una vez seleccionado el color
     if (event.target && event.target.id === "i-red" || event.target.id === "i-yellow" || event.target.id === "i-green" || event.target.id === "i-white") {
         const i_color = event.target;
+
+        // cambia la clase para que se oculte el div dinámico
         const container_functions = i_color.closest(".container-functions");
+        container_functions.classList.toggle("hidden");
+    }
+
+    if (event.target && event.target.className === "p-delete" || event.target.className === "p-edit") {
+        const p_edit = event.target;
+
+        // cambia la clase para que se oculte el div dinámico
+        const container_functions = p_edit.closest(".container-functions");
         container_functions.classList.toggle("hidden");
     }
 
@@ -228,7 +286,7 @@ board.addEventListener('click', (event) => {
         parent.classList.remove("expand-form");
     }
 
-    // Al hacer click al botono de añadir columna, intercambia la clase para mostrar el formulario
+    // Al hacer click al boton de añadir columna, intercambia la clase para mostrar el formulario
     if (event.target && event.target.id === "submit-id-column") {
         event.preventDefault();
 
@@ -275,6 +333,30 @@ board.addEventListener('click', (event) => {
 
         form2.classList.toggle("expand-form");
         form2.classList.toggle("form2");
+    }
+
+    // formulario para agregar nota en la tarea
+    if (event.target && event.target.id === "submit-note") {
+        event.preventDefault();
+
+        const parent = event.target;
+        const column_close = parent.closest('.task');
+
+        const div_note = column_close.querySelector('.content-notes');
+
+        // obtiene el valor del input para luego mostrarlo dentro del div
+        const value_input = column_close.querySelector('.input-note');
+
+        const p_note = document.createElement('p');
+        p_note.textContent = value_input.value;
+
+
+        div_note.appendChild(p_note);
+
+        value_input.value = "";
+
+        // agregarlo en el JSON y mandarlo a la URL de php para 
+        // guardarlo en la base de datos
     }
 
     // bloque para cerrar formulario2 al clickear la X
@@ -336,7 +418,6 @@ function handleChangeColor(event) {
     } else if (event.target.id === "i-white") {
         select_task_element(event, '#ffffff');
     }
-
 }
 
 // funcion para acceder al evento que clickie y seleccionar color al background
@@ -349,15 +430,41 @@ function select_task_element(event, color) {
 
 function handleEdit() {
     console.log("activaste el evento editar");
-    // codigo para concetarse con el backend y editar
+    // codigo para conectarse con el backend y editar
 }
 
-function handleDelete() {
-    console.log("activaste el evento borrar");
-    // codigo para concetarse con el backend y eliminar
+function handleDelete(event) {
+    // eliminar elemento del HTML
+    const task_to_remove = event.target.closest(".task");
+    task_to_remove.remove();
+
+    // id de la tarea para eliminar
+    let task_id = event.target.id;
+
+    // cambio el id que es un string a decimal
+    task_id = parseInt(task_id);
+
+
+
+    fetch('../tasks.json')
+        .then(response => response.json())
+        .then(data => {
+            // crear nuevo JSON para mandar a la URL
+            const new_json = {
+                usuarios: data.usuarios,
+                columnas: data.columnas.map(columna => ({
+                    ...columna,
+                    tarjetas: columna.tarjetas.filter(tarjeta => {
+                        return tarjeta.id !== task_id
+                    })
+                }))
+            };
+            console.log(new_json);
+        })
+        .catch(error => {
+            console.error('Error al cargar el JSON: ', error);
+        });
 }
-
-
 
 // Drag y drop
 board.addEventListener("dragstart", (event) => {
@@ -425,11 +532,8 @@ function insertAboveTask(zone, mouseY) {
 fetch('../tasks.json')
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-
         // recorrer las tarjetas y generar el HTML para cada una
         for (const column of data.columnas) {
-            console.log(column);
             // crear los elementos HTML para la tarjeta
             const div_card_column = document.createElement('div');
             div_card_column.className = "card-column";
@@ -447,7 +551,7 @@ fetch('../tasks.json')
             const h3_column = document.createElement('h3');
             h3_column.className = "title-column";
             h3_column.id = "h3-id";
-            h3_column.textContent = column.nombre;
+            h3_column.textContent = column.titulo;
 
             const button_add_task = document.createElement('button');
             button_add_task.type = "submit";
@@ -462,145 +566,205 @@ fetch('../tasks.json')
 
             card_container.appendChild(div_card_column);
 
-            for (const task of data.tareas) {
-                if (column.id === task.id_columna) {
-                    console.log(column.nombre);
-                    console.log(task.nombre);
+            for (const task of column.tarjetas) {
+                // if (column.id === task.id_columna) {
+                // Crear elemento div que contiene la tarea
+                const div_task = document.createElement("div");
+                div_task.className = 'task';
+                div_task.style.backgroundColor = task.color;
+                div_task.id = 'taskId';
+                div_task.draggable = true;
 
-                    // Crear elemento div que contiene la tarea
-                    const div_task = document.createElement("div");
-                    div_task.className = 'task';
-                    div_task.id = 'taskId';
-                    div_task.draggable = true;
+                // Crear boton y div para "ver mas funciones" para las tareas
+                const button = document.createElement("button");
+                button.className = "button-icon fix";
+                button.id = "more-functions";
+                button.type = "button";
 
-                    // Crear boton y div para "ver mas funciones" para las tareas
-                    const button = document.createElement("button");
-                    button.className = "button-icon fix";
-                    button.id = "more-functions";
-                    button.type = "button";
+                const img = document.createElement("img");
+                img.id = "img-more-icon";
+                img.src = "https://cdn-icons-png.flaticon.com/128/10519/10519044.png";
+                img.alt = "icon-delete";
 
-                    const img = document.createElement("img");
-                    img.id = "img-more-icon";
-                    img.src = "https://cdn-icons-png.flaticon.com/128/10519/10519044.png";
-                    img.alt = "icon-delete";
+                button.appendChild(img);
 
-                    button.appendChild(img);
+                const div_container_functions = document.createElement("div");
+                div_container_functions.className = "container-functions";
+                div_container_functions.id = "container-functions-id";
 
-                    const div_container_functions = document.createElement("div");
-                    div_container_functions.className = "container-functions";
-                    div_container_functions.id = "container-functions-id";
+                button.appendChild(div_container_functions);
 
-                    button.appendChild(div_container_functions);
-
-                    const div_change_color = document.createElement("div");
-                    div_change_color.className = "p-change-color";
-                    div_change_color.id = "color-task";
+                const div_change_color = document.createElement("div");
+                div_change_color.className = "p-change-color";
+                div_change_color.id = "color-task";
 
 
-                    const li_red = document.createElement("li");
+                const li_red = document.createElement("li");
 
-                    const i_red = document.createElement("i");
-                    i_red.className = "fas fa-square red";
-                    i_red.id = "i-red";
+                const i_red = document.createElement("i");
+                i_red.className = "fas fa-square red";
+                i_red.id = "i-red";
 
-                    li_red.appendChild(i_red);
+                li_red.appendChild(i_red);
 
-                    const li_yellow = document.createElement("li");
+                const li_yellow = document.createElement("li");
 
-                    const i_yellow = document.createElement("i");
-                    i_yellow.className = "fas fa-square yellow";
-                    i_yellow.id = "i-yellow";
+                const i_yellow = document.createElement("i");
+                i_yellow.className = "fas fa-square yellow";
+                i_yellow.id = "i-yellow";
 
-                    li_yellow.appendChild(i_yellow);
-
-
-                    const li_green = document.createElement("li");
-
-                    const i_green = document.createElement("i");
-                    i_green.className = "fas fa-square green";
-                    i_green.id = "i-green";
-
-                    li_green.appendChild(i_green);
+                li_yellow.appendChild(i_yellow);
 
 
-                    const li_white = document.createElement("li");
+                const li_green = document.createElement("li");
 
-                    const i_white = document.createElement("i");
-                    i_white.className = "fas fa-square white";
-                    i_white.id = "i-white";
+                const i_green = document.createElement("i");
+                i_green.className = "fas fa-square green";
+                i_green.id = "i-green";
 
-                    li_white.appendChild(i_white);
+                li_green.appendChild(i_green);
 
-                    div_change_color.appendChild(li_red);
-                    div_change_color.appendChild(li_yellow);
-                    div_change_color.appendChild(li_green);
-                    div_change_color.appendChild(li_white);
 
-                    const div_p_edit = document.createElement("div");
+                const li_white = document.createElement("li");
 
-                    const p_edit = document.createElement("p");
-                    p_edit.className = "p-edit";
-                    p_edit.textContent = "Editar";
+                const i_white = document.createElement("i");
+                i_white.className = "fas fa-square white";
+                i_white.id = "i-white";
 
-                    div_p_edit.appendChild(p_edit);
+                li_white.appendChild(i_white);
 
-                    const div_p_delete = document.createElement("div");
+                div_change_color.appendChild(li_red);
+                div_change_color.appendChild(li_yellow);
+                div_change_color.appendChild(li_green);
+                div_change_color.appendChild(li_white);
 
-                    const p_delete = document.createElement("p");
-                    p_delete.className = "p-delete";
-                    p_delete.textContent = "Eliminar";
+                const div_p_edit = document.createElement("div");
 
-                    div_p_delete.appendChild(p_delete);
+                const p_edit = document.createElement("p");
+                p_edit.className = "p-edit";
+                p_edit.id = task.id;
+                p_edit.textContent = "Editar";
 
-                    div_container_functions.appendChild(div_change_color);
-                    div_container_functions.appendChild(div_p_edit);
-                    div_container_functions.appendChild(div_p_delete);
+                div_p_edit.appendChild(p_edit);
 
-                    div_task.appendChild(button);
+                const div_p_delete = document.createElement("div");
 
-                    // Crear elemento p dentro el div
-                    const p = document.createElement('p');
-                    p.textContent = task.nombre;
+                const p_delete = document.createElement("p");
+                p_delete.className = "p-delete";
+                p_delete.id = task.id;
+                p_delete.textContent = "Eliminar";
 
-                    // Añadir elemento p al div
-                    div_task.appendChild(p);
+                div_p_delete.appendChild(p_delete);
 
-                    // Crear elemento div con información adicional dentro del otro div
-                    const additional_info_div = document.createElement('div');
-                    additional_info_div.className = 'additional-info';
+                div_container_functions.appendChild(div_change_color);
+                div_container_functions.appendChild(div_p_edit);
+                div_container_functions.appendChild(div_p_delete);
 
-                    // Crear elementos p dentro del div con info adicional
-                    const description_p = document.createElement('p');
-                    description_p.textContent = 'Descripción de la tarea: ';
+                div_task.appendChild(button);
 
-                    const text_description_p = document.createElement('p');
-                    text_description_p.textContent = task.descripcion_de_la_tarea;
+                // Crear elemento p dentro el div
+                const p = document.createElement('p');
+                p.textContent = task.titulo;
 
-                    const in_charge_p = document.createElement('p');
-                    in_charge_p.textContent = 'Encargado: ' + task.encargado;
+                // Añadir elemento p al div
+                div_task.appendChild(p);
 
-                    const estimated_hours_p = document.createElement('p');
-                    estimated_hours_p.textContent = 'Vencimiento: ' + task.vencimiento;
+                // Crear elemento div con información adicional dentro del otro div
+                const additional_info_div = document.createElement('div');
+                additional_info_div.className = 'additional-info';
 
-                    // añadir los elementos p al div con info adicional
-                    additional_info_div.appendChild(description_p);
-                    additional_info_div.appendChild(in_charge_p);
-                    additional_info_div.appendChild(estimated_hours_p);
-                    description_p.appendChild(text_description_p);
+                // Crear elementos p dentro del div con info adicional
+                const description_p = document.createElement('p');
+                description_p.textContent = 'Descripción de la tarea: ';
 
-                    // añadir div adicional al div principal
-                    div_task.appendChild(additional_info_div);
+                const text_description_p = document.createElement('p');
+                text_description_p.textContent = task.descripcion;
 
-                    // añadir la tarea al contenedor de la columna, según corresponda
-                    div_card_column.appendChild(div_task);
+                const in_charge_p = document.createElement('p');
+                in_charge_p.textContent = "Encargado/s: "
+                // recorre el objeto encargado, e indica el nombre del id que esta encargado la tarea
+                for (const index in task.usuarios) {
+                    // console.log(task.usuarios[index]);
+                    for (const users of data.usuarios) {
+                        if (task.usuarios[index] === users.id) {
+                            in_charge_p.textContent += users.nombre + ', ';
+                        }
+                    }
+                }
+                // borrar la ultima coma de los usuarios
+                in_charge_p.textContent = in_charge_p.textContent.slice(0, -2);
 
+                const estimated_hours_p = document.createElement('p');
+                estimated_hours_p.textContent = 'Vencimiento: ' + task.vencimiento;
+
+
+                // añadir los elementos p al div con info adicional
+                additional_info_div.appendChild(description_p);
+                additional_info_div.appendChild(in_charge_p);
+                additional_info_div.appendChild(estimated_hours_p);
+                description_p.appendChild(text_description_p);
+
+                // añadir div adicional al div principal
+                div_task.appendChild(additional_info_div);
+
+
+                // bloque para agregar notas a la tarea
+                const add_notes = document.createElement('div');
+                add_notes.className = "notes";
+
+                const p_title_note = document.createElement('p');
+                p_title_note.className = "p-title-note";
+                p_title_note.textContent = "Notas:";
+
+                add_notes.appendChild(p_title_note);
+
+                const div_content_notes = document.createElement('div');
+                div_content_notes.className = "content-notes";
+
+                add_notes.appendChild(div_content_notes);
+
+                for (const notes of task.notas) {
+                    const p_note = document.createElement('p');
+                    p_note.textContent = notes.nota;
+
+                    div_content_notes.appendChild(p_note);
                 }
 
+                const label_notes = document.createElement('label');
+                label_notes.htmlFor = "notes";
+                label_notes.textContent = "Añadir Notas:"
+
+                add_notes.appendChild(label_notes);
+
+                const input_notes = document.createElement('input');
+                input_notes.className = "input-note";
+                input_notes.id = "input-note-idddd";
+                input_notes.name = "notes"
+                input_notes.type = "text";
+
+                add_notes.appendChild(input_notes);
+
+                const button_notes = document.createElement('button');
+                button_notes.className = "btn-form submit";
+                button_notes.id = "submit-note";
+                button_notes.type = "submit";
+                button_notes.textContent = "Añadir Nota";
+
+                add_notes.appendChild(button_notes);
+
+                div_task.appendChild(add_notes);
+
+                // añadir la tarea al contenedor de la columna, según corresponda
+                div_card_column.appendChild(div_task);
+                // }
             }
         }
     })
-
-
     .catch(error => {
         console.error('Error al cargar el JSON: ', error);
     })
+
+function die(message) {
+    throw new Error(message);
+}
+

@@ -246,14 +246,10 @@
 
 .hidden {
     display: block;
-    max-height: 150px;
-
+    max-height: 250px;
 }
 
 #color-task {
-    /* max-height: 0; */
-    /* overflow: hidden; */
-
     display: flex;
     list-style: none;
 }
@@ -278,7 +274,46 @@
     color: #dcd8d8;
 }
 
+/* Estilos para las notas de cada tarea */
 
+.notes {
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 700ms ease;
+}
+
+.show-notes {
+    max-height: 1000px;
+}
+
+.p-title-note {
+    margin-bottom: 8px;
+    margin-top: 5px;
+}
+
+.content-notes p {
+    margin-bottom: 15px;
+    color: #00000067;
+}
+
+.input-note {
+    margin-top: 12px;
+    padding: 12px 32px;
+    display: block;
+
+    border-radius: 4px;
+    border: none;
+
+    box-shadow: 0px 5px 15px #00000040;
+    background-color: #ffffff;
+    color: #6a6262;
+
+    font-weight: bold;
+    font-size: 14px;
+    cursor: text;
+    outline: none;
+}
 
 /* Reglas que tomará al activar el evento drag */
 .is-dragging {
@@ -295,7 +330,7 @@
 .additional-info {
     max-height: 0;
     overflow: hidden;
-    color: rgba(0, 0, 0, 0.402);
+    color: #00000067;
 
     transition: max-height 700ms ease;
 }
@@ -313,11 +348,6 @@
 
 .expand p {
     margin-bottom: 10px;
-}
-
-h3 {
-    /* display: flex; */
-    /* align-items: center; */
 }
 
 .img-column {
