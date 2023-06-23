@@ -109,6 +109,28 @@
     background-color: #64cb6bc8;
 }
 
+.select-container {
+    display: block;
+    border-radius: 4px;
+    border: none;
+
+    box-shadow: 0px 5px 15px #00000040;
+    background-color: #ffffff;
+
+    width: 200px;
+    height: auto;
+    padding: 5px;
+
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.select-container options {
+    padding: 3px;
+}
+
 .btn-form:hover {
     background-color: #7aa77d !important;
     transition: all 250ms !important;
@@ -386,7 +408,6 @@
 
 .hidden-title {
     display: none;
-
 }
 
 .submit-h3 {

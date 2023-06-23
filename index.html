@@ -26,15 +26,19 @@
                 <input type="text" name="task" id="name-task" required>
 
                 <label for="description">Descripción</label>
-                <input type="text" name="description" id="description-task" maxlength="70" required>
+                <input type="text" name="description" id="description-task" maxlength="120" required>
 
                 <label for="expiration">Vencimiento</label>
                 <input type="date" name="expiration" id="expiration-task" required>
 
                 <label for="in_charge">Encargado</label>
-                <input type="text" name="in_charge" id="in-charge-task" required>
+                <select class="select-container" multiple>
+                    <!-- accedo al json desde el js y muestro los usuarios disponibles -->
+                </select>
 
                 <button type="submit" id="submit-id-task" class="btn-form submit">Añadir Tarea</button>
+                <button type="submit" id="submit-edit-id-task" class="btn-form submit">Editar Tarea</button>
+
             </div>
         </form>
 
@@ -61,7 +65,7 @@
 
             <!-- </div> -->
             <!-- </div> -->
-            
+
         </div>
     </div>
 
